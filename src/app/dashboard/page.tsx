@@ -1,8 +1,9 @@
-// app/page.tsx
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 import Image from 'next/image';
 import Link from 'next/link';
+
+export const revalidate = 0;  // Desactiva prerender para evitar error de conexión en build
 
 export default async function Home() {
   const noticias = await prisma.news.findMany({
