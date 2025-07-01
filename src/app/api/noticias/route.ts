@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+
 const prisma = new PrismaClient();
 
 export async function GET() {
@@ -8,8 +9,13 @@ export async function GET() {
       where: { estado: 'PENDIENTE' },
       orderBy: { created_at: 'desc' }
     });
+
     return NextResponse.json(noticias);
-  } catch (error) {
-    return NextResponse.json({ error: 'Error al cargar noticias' }, { status: 500 });
+  } catch (err) {
+    console.error('Error al cargar noticias:', err); // ✅ ahora sí usamos err
+    return NextResponse.json(
+      { error: 'Error al cargar noticias' },
+      { status: 500 }
+    );
   }
 }
